@@ -1,0 +1,33 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "My personal blog",
+  "main": "generate.js",
+  "scripts": {
+    "test": "mocha \"**/*.unit.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redien/blog.git"
+  },
+  "keywords": [
+    "blog",
+    "markdown",
+    "static",
+    "pages",
+    "html",
+    "homepage",
+    "webpage",
+    "personal"
+  ],
+  "author": "Jesper Oskarsson <jesosk@gmail.com>",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/redien/blog/issues"
+  },
+  "homepage": "https://github.com/redien/blog#readme",
+  "devDependencies": {
+    "mocha": "^2.5.3",
+    "should": "^9.0.0"
+  }
+}
