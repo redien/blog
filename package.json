@@ -4,7 +4,10 @@
   "description": "My personal blog",
   "main": "generate.js",
   "scripts": {
-    "test": "mocha \"**/*.unit.js\""
+    "test": "mocha \"**/*.unit.js\"",
+    "generate-posts": "cd generated && lodash-template-cli ../templates/post.html posts/*.json ../public && cd .. && renamer --find .json --replace .html 'public/posts/*'",
+    "generate-index": "cd generated && lodash-template-cli ../templates/index.html index.json ../public && cd .. && renamer --find .json --replace .html 'public/index.json'",
+    "generate": "node generate.js && npm run-script generate-posts && npm run-script generate-index"
   },
   "repository": {
     "type": "git",
@@ -28,6 +31,13 @@
   "homepage": "https://github.com/redien/blog#readme",
   "devDependencies": {
     "mocha": "^2.5.3",
+    "renamer": "^0.5.7",
     "should": "^9.0.0"
+  },
+  "dependencies": {
+    "lodash-template-cli": "^2.0.0",
+    "markdown-it": "^6.0.5",
+    "node-dir": "^0.1.12",
+    "shelljs": "^0.7.0"
   }
 }
