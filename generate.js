@@ -15,7 +15,8 @@ var fs = require('fs');
 var dir = require('node-dir');
 var shell = require('shelljs');
 
-shell.rm('-R', path.join(__dirname, 'public'));
+shell.rm('-R', path.join(__dirname, 'public', 'posts'));
+shell.rm(path.join(__dirname, 'public', 'index.html'));
 
 var sourcePath = path.join(__dirname, 'posts');
 var destinationPath = path.join(__dirname, 'generated');
