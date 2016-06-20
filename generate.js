@@ -31,6 +31,10 @@ var postDestinationPath = path.join(destinationPath, 'posts');
 shell.mkdir('-p', destinationPath);
 shell.mkdir('-p', postDestinationPath);
 
+var doNotPublish = function (meta) {
+    meta.date = moment('01-01-2100', 'DD-MM-YYYY');
+};
+
 var parseMetadata = function (path, json) {
     var meta = JSON.parse(json);
 
@@ -39,11 +43,14 @@ var parseMetadata = function (path, json) {
             throw new Error(property + ' not found in ' + path);
         }
     };
-    
-    assertPropertyIn('title');
-    assertPropertyIn('date');
 
-    var date = moment(meta.date, "DD-MM-YYYY");
+    assertPropertyIn('title');
+
+    if (meta.date === undefined) {
+        doNotPublish(meta);
+    }
+
+    var date = moment(meta.date, 'DD-MM-YYYY');
     meta.moment = date;
     meta.date = date.format();
     meta.readableDate = date.format('dddd, MMMM Do YYYY');

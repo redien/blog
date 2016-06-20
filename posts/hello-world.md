@@ -10,7 +10,7 @@
   If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 -->
 
-<!-- meta-data: {"title": "Hello, world!", "date": "20-06-2016"} -->
+<!-- meta-data: {"title": "Hello, world!"} -->
 
 Why don't we start off with some Pogo!
 
