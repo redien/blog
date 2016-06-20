@@ -12,7 +12,7 @@ h3 {
     font-size: 3.2rem;
 }
 
-h3 > a {
+h1 > a, h3 > a {
     color: #222;
 }
 

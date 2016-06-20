@@ -96,7 +96,8 @@ dir.files(sourcePath, function (error, files) {
         return dataMaps[index].meta.moment.isBefore();
     });
     var indexPage = indexTemplate({
-        html: publishedPosts.join('\n')
+        html: publishedPosts.join('\n'),
+        url: url
     });
 
     var postIds = dataMaps.map((file) => postIdFromPath(file.path));
