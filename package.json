@@ -36,6 +36,7 @@
     "shx": "^0.1.2"
   },
   "dependencies": {
+    "highlight.js": "^9.4.0",
     "lodash": "^4.13.1",
     "lodash-template-cli": "^2.0.0",
     "markdown-it": "^6.0.5",

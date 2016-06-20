@@ -1,4 +1,3 @@
-
 // blog - My personal blog
 // Written in 2016 by Jesper Oskarsson jesosk@gmail.com
 //
@@ -9,7 +8,20 @@
 // You should have received a copy of the CC0 Public Domain Dedication along with this software.
 // If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 
-var md = require('markdown-it')({ html: true });
+var highlight = require('highlight.js');
+
+var md = require('markdown-it')({
+    highlight: function (str, language) {
+        if (language && highlight.getLanguage(language)) {
+            try {
+                return highlight.highlight(language, str).value;
+            } catch (error) {}
+        }
+
+        return '';
+    },
+    html: true
+});
 
 module.exports.render = function (markdown) {
     return md.render(markdown);
