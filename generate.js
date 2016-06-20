@@ -83,7 +83,11 @@ dir.files(sourcePath, function (error, files) {
 
     var dataMaps = files.map(renderFile);
     var renderedPosts = dataMaps.map(postSectionTemplate);
-    var renderedPostPages = dataMaps.map(postTemplate);
+    var renderedPostPages = dataMaps.map((sectionData) => {
+        var data = Object.assign({}, sectionData);
+        data.html = postSectionTemplate(data);
+        return postTemplate(data);
+    });
 
     var publishedPosts = renderedPosts.filter((post, index) => {
         return dataMaps[index].meta.moment.isBefore();

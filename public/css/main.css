@@ -12,6 +12,10 @@ h3 {
     font-size: 3.2rem;
 }
 
+h3 > a {
+    color: #222;
+}
+
 time {
     font-size: 1rem;
     color: #999;
