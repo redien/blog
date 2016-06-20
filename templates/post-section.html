@@ -2,7 +2,7 @@
 <section class="section" id="<%= postId %>">
     <div class="row">
         <div class="col s12">
-            <h3><a href="posts/<%= postId %>.html"><%= meta.title %></a></h3>
+            <h3><a href="<%= url + '/posts/' + postId %>.html"><%= meta.title %></a></h3>
             <time datetime="<%= meta.date %>"><%= meta.readableDate %></time>
             <%= html %>
         </div>

@@ -9,6 +9,8 @@
 // You should have received a copy of the CC0 Public Domain Dedication along with this software.
 // If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 
+var url = 'https://imperfectabstraction.com';
+
 var markdown = require('./markdown/renderer');
 var path = require('path');
 var fs = require('fs');
@@ -72,7 +74,8 @@ var renderFile = function (path) {
         postId: postIdFromPath(path),
         path: path,
         html: markdownHtml,
-        meta: meta
+        meta: meta,
+        url: url
     };
 };
 
