@@ -34,9 +34,14 @@ shell.mkdir('-p', postDestinationPath);
 var parseMetadata = function (path, json) {
     var meta = JSON.parse(json);
 
-    if (meta.title === undefined) {
-        throw new Error('title not found in ' + path);
-    }
+    var assertPropertyIn = function (property) {
+        if (meta[property] === undefined) {
+            throw new Error(property + ' not found in ' + path);
+        }
+    };
+    
+    assertPropertyIn('title');
+    assertPropertyIn('date');
 
     var date = moment(meta.date, "DD-MM-YYYY");
     meta.moment = date;
