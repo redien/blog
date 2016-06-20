@@ -9,4 +9,4 @@
 # You should have received a copy of the CC0 Public Domain Dedication along with this software.
 # If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 
-git pull && npm run generate
+git pull && npm install && npm run generate
