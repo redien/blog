@@ -5,11 +5,8 @@
   "main": "generate.js",
   "scripts": {
     "test": "mocha \"**/*.unit.js\"",
-    "generate-posts": "cd generated && lodash-template-cli ../templates/post.html posts/*.json ../public && cd .. && renamer --find .json --replace .html 'public/posts/*'",
-    "generate-post-sections": "cd generated && lodash-template-cli ../templates/post-section.html posts/*.json ../generated/sections && cd .. && renamer --find .json --replace .html 'generated/sections/posts/*'",
-    "generate-index": "shx cat generated/sections/posts/* > generated/sections/concatenated.html && node -e \"console.log(JSON.stringify({html: require('fs').readFileSync('generated/sections/concatenated.html').toString()}))\" | lodash-template-cli templates/index.html > public/index.html",
-    "generate": "npm run-script clean && node generate.js && npm run-script generate-posts && npm run-script generate-post-sections && npm run-script generate-index && js-beautify --html -E none -I -r public/index.html public/posts/*.html",
-    "clean": "shx rm -rf generated && shx rm -rf public/posts && shx rm -f public/index.html"
+    "generate": "npm run-script clean && node generate.js && js-beautify --html -E none -I -r public/index.html public/posts/*.html",
+    "clean": "shx rm -rf public/posts && shx rm -f public/index.html"
   },
   "repository": {
     "type": "git",
@@ -39,8 +36,10 @@
     "shx": "^0.1.2"
   },
   "dependencies": {
+    "lodash": "^4.13.1",
     "lodash-template-cli": "^2.0.0",
     "markdown-it": "^6.0.5",
+    "moment": "^2.13.0",
     "node-dir": "^0.1.12",
     "shelljs": "^0.7.0"
   }

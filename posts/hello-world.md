@@ -10,8 +10,8 @@
   If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 -->
 
-### Hello, world!
+<!-- meta-data: {"title": "Hello, world!", "date": "20-06-2016"} -->
 
 Why don't we start off with some Pogo!
 
-<iframe width="420" height="315" src="https://www.youtube.com/embed/C0u0bOw4hi8" frameborder="0" allowfullscreen></iframe>
+<iframe width="640" height="320" src="https://www.youtube.com/embed/C0u0bOw4hi8" frameborder="0" allowfullscreen></iframe>
