@@ -84,8 +84,12 @@ dir.files(sourcePath, function (error, files) {
     var dataMaps = files.map(renderFile);
     var renderedPosts = dataMaps.map(postSectionTemplate);
     var renderedPostPages = dataMaps.map(postTemplate);
+
+    var publishedPosts = renderedPosts.filter((post, index) => {
+        return dataMaps[index].meta.moment.isBefore();
+    });
     var indexPage = indexTemplate({
-        html: renderedPosts.join('\n')
+        html: publishedPosts.join('\n')
     });
 
     var postIds = dataMaps.map((file) => postIdFromPath(file.path));
