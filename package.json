@@ -32,7 +32,6 @@
   },
   "homepage": "https://github.com/redien/blog#readme",
   "devDependencies": {
-    "jq-cli-wrapper": "^0.3.0",
     "js-beautify": "^1.6.3",
     "mocha": "^2.5.3",
     "renamer": "^0.5.7",
