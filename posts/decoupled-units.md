@@ -41,9 +41,9 @@ var evaluate = function (expression) {
 };
 ```
 
-In this example, `calculate` is said to be tightly coupled with `parse` since it calls it directly by name. Any time `parse` changes, `calculate` will also change.
+In this example, `evaluate` is said to be tightly coupled with `parse` since it calls it directly by name. Any time `parse` changes, `evaluate` will also change.
 
-We can also write the same implementation using classes:
+We can also write the same implementation using object orientation:
 
 ```java
 class Expression {
@@ -79,7 +79,7 @@ class ExpressionEvaluator {
 ```
 These implementations makes it impossible to test the evaluator in isolation since it directly references the parser.
 
-What we can do to reduce coupling, is to [change our evaluator to take the parser as a dependency](https://en.wikipedia.org/wiki/Dependency_injection).
+What we can do to reduce coupling is to change our evaluator to take the parser as a dependency, which is known as [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection). (This can also be seen as implementing the [strategy pattern](https://en.wikipedia.org/wiki/Strategy_pattern).)
 
 ##### Loose coupling
 Looking back at our first example we can pass the `evaluate` function a `parser` that parses the expression:
@@ -153,16 +153,15 @@ class ExpressionEvaluator {
 Both implementations are now loosely coupled since the evaluators do not directly depend on the parser implementations which means that we can swap out the parsers for other ones. For example, this makes it possible to mock out our parser for a dummy one and test the evaluator in isolation. We could also write a parser to parse prefix notation instead of infix. (Something like `+ 1 2`.)
 
 ##### More loosely coupled?
-However, our interfaces are still constrained more than they need to be. For example, the evaluator still takes a string with the expression to be evaluated and passes it to the parser. The evaluator implementation is actually not dependent on the fact that the expression is parsed from a string.
+However, our interfaces are still constrained more than they need to be. For example, the evaluator still takes a string with the expression to be evaluated and passes it to the parser. This means that our evaluator is coupled to the input data structure of the parser. The evaluator does not actually need to depend on the fact that the expression is parsed from a string.
 
 Let's think a bit more about what data structures we are using and how we can reduce unnecessary coupling:
 
 - Our parser takes as input a string with a certain format. We have not defined how this string should be formatted so this depends on the implementation of our parser.
-- The parser outputs three values, an operator, a left and a right addend.
-- Our evaluator takes the before mentioned output from the parser and outputs an integer with the result of the evaluation.
+- The parser outputs three values, an operator as a string, a left and a right addend as signed integers.
+- Our evaluator takes the before mentioned output from the parser and outputs a signed integer with the result of the evaluation.
 
-Let's fix the evaluator knowing about the input string.
-
+Let's fix the evaluator knowing about the input string:
 
 ```javascript
 var expression = "1 + 2";
@@ -231,7 +230,7 @@ class ExpressionEvaluator {
 }
 ```
 
-We are now free to use the parser on its own and do anything we would like with the output, like create an infix to postfix translator or save the parsed expression to disk and evaluate it later without the need to parse it again. We can also easily test our implementations in isolation without the need for any mock objects.
+We are now free to use the parser on its own and do anything we'd like with the output, like create an infix to postfix translator or save the parsed expression to disk and evaluate it later without the need to parse it again. We can also easily test our implementations in isolation without the need for any mock objects.
 
 From the perspective of the user of this code, it now looks something like this:
 
@@ -245,7 +244,10 @@ And this is how it looked when we started:
 string -> [evaluator] -> int
 ```
 
-We had no idea there even was a parser, this was simply an implementation detail. Now that we have decoupled these two units we have exposed a dependency on the parser and its output. What are the drawbacks of this?
+We had no idea there even was a parser, this was simply an implementation detail. Now that we have decoupled these two units we have exposed an additional interface. What are the drawbacks of this?
+
+##### Importance of data structures
+Since we now depend on the output of the parser.
 
 <!--
 ```ocaml
