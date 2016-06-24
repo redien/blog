@@ -20,8 +20,6 @@ The strongest way in which two units can be coupled is by directly referencing o
 In the case of functions, one could simply be calling the other one:
 
 ```javascript
-var expression = "1 + 2";
-
 var parse = function (expression) {
     return {
         operator: expression.substr(2, 1),
@@ -39,6 +37,8 @@ var evaluate = function (expression) {
         return parsedExpression.left - parsedExpression.right;
     }
 };
+
+console.log(evaluate("1 + 2"));
 ```
 
 In this example, `evaluate` is said to be tightly coupled with `parse` since it calls it directly by name. Any time `parse` changes, `evaluate` will also change.
@@ -46,6 +46,7 @@ In this example, `evaluate` is said to be tightly coupled with `parse` since it 
 We can also write the same implementation using object orientation:
 
 ```java
+
 class Expression {
     String operator;
     int left, right;
@@ -64,8 +65,8 @@ class Expression {
 class ExpressionEvaluator {
     Expression expression = new Expression();
 
-    public ExpressionEvaluator(String expression) {
-        expression.parse(expression);
+    public ExpressionEvaluator(String expressionString) {
+        expression.parse(expressionString);
     }
 
     public int evaluate() {
@@ -74,6 +75,13 @@ class ExpressionEvaluator {
         } else {
             return expression.getLeft() - expression.getRight();
         }
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        ExpressionEvaluator evaluator = new ExpressionEvaluator("1 + 2");
+        System.out.println(evaluator.evaluate());
     }
 }
 ```
@@ -85,8 +93,6 @@ What we can do to reduce coupling is to change our evaluator to take the parser 
 Looking back at our first example we can pass the `evaluate` function a `parser` that parses the expression:
 
 ```javascript
-var expression = "1 + 2";
-
 var parse = function (expression) {
     return {
         operator: expression.substr(2, 1),
@@ -104,11 +110,14 @@ var evaluate = function (parser, expression) {
         return parsedExpression.left - parsedExpression.right;
     }
 };
+
+console.log(evaluate(parse, "1 + 2"));
 ```
 
 We can do the same thing with our `ExpressionEvaluator` class and pass in the `Expression` as an implementation of an interface:
 
 ```java
+
 interface Expression {
     public void parse(String expression);
 
@@ -148,6 +157,14 @@ class ExpressionEvaluator {
         }
     }
 }
+
+class Main {
+    public static void main(String[] args) {
+        Expression expression = new InfixExpression();
+        ExpressionEvaluator evaluator = new ExpressionEvaluator(expression, "1 + 2");
+        System.out.println(evaluator.evaluate());
+    }
+}
 ```
 
 Both implementations are now loosely coupled since the evaluators do not directly depend on the parser implementations which means that we can swap out the parsers for other ones. For example, this makes it possible to mock out our parser for a dummy one and test the evaluator in isolation. We could also write a parser to parse prefix notation instead of infix. (Something like `+ 1 2`.)
@@ -164,8 +181,6 @@ Let's think a bit more about what data structures we are using and how we can re
 Let's fix the evaluator knowing about the input string:
 
 ```javascript
-var expression = "1 + 2";
-
 var parse = function (expression) {
     return {
         operator: expression.substr(2, 1),
@@ -182,9 +197,7 @@ var evaluate = function (parsedExpression) {
     }
 };
 
-var parseAndEvaluate = function (expression) {
-    return evaluate(parse(expression));
-}
+console.log(evaluate(parse("1 + 2")));
 ```
 
 ```java
@@ -226,6 +239,14 @@ class ExpressionEvaluator {
         } else {
             return expression.getLeft() - expression.getRight();
         }
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Expression expression = new InfixExpression("1 + 2");
+        ExpressionEvaluator evaluator = new ExpressionEvaluator(expression);
+        System.out.println(evaluator.evaluate());
     }
 }
 ```
