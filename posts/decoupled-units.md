@@ -12,7 +12,81 @@
 
 <!-- meta-data: {"title": "Designing decoupled units"} -->
 
-I’ve been thinking a lot about code coupling lately. What does it actually mean for two unit of code to be coupled and in what ways can they be coupled? As high coupling is generally considered an undesired trait, how can we reduce it?
+I’ve been thinking a lot about code coupling lately. What does it actually mean for two unit of code to be coupled and in what ways can they be coupled? As high coupling is generally considered an undesired trait, how can we reduce it? Also why is it considered bad in the first place?
+
+I wanted to write down my thoughts on coupling in a concise form so that I can better understand it myself.
+
+##### Tight (or direct) coupling
+A unit or module being it a function, type, class, method or any other abstraction, is considered tightly coupled to a second if it directly uses the other by name.
+
+In the following Javascript example `bar` is tightly coupled to `foo` as it directly calls it by name:
+```javascript
+function foo(x) {
+    return x;
+}
+
+function bar() {
+    return foo(1);
+}
+
+console.log(bar());
+```
+
+For example, if we change `foo` like this:
+```javascript
+function foo(x) {
+    return x + 1;
+}
+```
+The behavior of `bar` will change as `bar(1)` would previously be `1` but now returns `2`.
+
+A type could also be coupled to another. Take this example in C:
+```c
+#include "stdio.h"
+
+typedef int foo_t;
+typedef foo_t bar_t;
+
+int main(void) {
+    bar_t a = 1;
+    bar_t b = 2;
+    bar_t c = a / b;
+    printf("%d\n", c);
+    return 0;
+}
+```
+
+The type `bar` changes whenever `foo` changes.
+
+```c
+typedef float foo_t;
+```
+Would change the value of `c` or any other unit using the type.
+
+##### Loose (or indirect) coupling
+We can rewrite the previous examples in several ways in order to reduce coupling. For example:
+```javascript
+function foo(x) {
+    return x;
+}
+
+function bar(fooer) {
+    return fooer(1);
+}
+
+function foobar() {
+    return bar(foo);
+}
+
+console.log(foobar());
+```
+
+Foobar is 
+
+##### Why loose coupling?
+If one unit is coupled to another
+
+##### "Real" example
 
 ##### Tight coupling
 The strongest way in which two units can be coupled is by directly referencing one another. This means that changing the behavior of the dependency will directly change the behavior of the dependent unit.
